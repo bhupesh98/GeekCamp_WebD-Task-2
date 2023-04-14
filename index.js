@@ -1,35 +1,39 @@
 console.log("Hello This website is made by Bhupesh!");
-const date = new Date();
-let formattedDate,formattedMonth;
-let fetchDate = date.getDate(),Month = date.getMonth() + 1;
-if (fetchDate < 10) {
-    formattedDate = "0" + fetchDate;
-} else {
-    formattedDate = fetchDate;
-}
-if (Month < 10) {
-    formattedMonth = "0" + Month;
-} else {
-    formattedMonth =Month;
-}
-// console.log(`https://api.tvmaze.com/schedule/web?date=${date.getFullYear()}-${formattedMonth}-${formattedDate}`);
+
+// here I did to update my website with current shows all over the world but images for 14-4-2023 are not available on API so I displayed shows sorted by their show ID
+
+
+// const date = new Date();
+// let formattedDate,formattedMonth;
+// let fetchDate = date.getDate(),Month = date.getMonth() + 1;
+// if (fetchDate < 10) {
+//     formattedDate = "0" + fetchDate;
+// } else {
+//     formattedDate = fetchDate;
+// }
+// if (Month < 10) {
+//     formattedMonth = "0" + Month;
+// } else {
+//     formattedMonth =Month;
+// }
+// // console.log(`https://api.tvmaze.com/schedule/web?date=${date.getFullYear()}-${formattedMonth}-${formattedDate}`);
 
 fetchMovieLink();
 function fetchMovieLink() {
-    fetch(`https://api.tvmaze.com/schedule/web?date=${date.getFullYear()}-${formattedMonth}-${formattedDate}`)
+    fetch(`https://api.tvmaze.com/shows`)
     .then((response)=> response.json())
     .then((allMovie)=>{
         let allMovieContainer = document.getElementById("content");
         allMovieContainer.innerHTML= "";
         allMovie.forEach((movie)=> {
-            renderMovie(movie._embedded,allMovieContainer);
+            renderMovie(movie);
         })
     });
 }
 
 function renderMovie(movie) {
     let allMovieContainer = document.getElementById("content");
-    let movieInfo = movie.show;
+    let movieInfo = movie;
     const movieContainer = document.createElement("div");
     movieContainer.classList.add('container');
 
@@ -110,7 +114,7 @@ function searchResults() {
             document.getElementById("message").innerHTML = "Search Results";
         }
         searchedMovie.forEach((element)=> {
-            renderMovie(element);
+            renderMovie(element.show);
         });
         
     });
